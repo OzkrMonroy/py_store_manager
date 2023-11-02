@@ -1,14 +1,18 @@
 import flet as ft
 from components.NavigationRail import NavigationRail
+from components.Card import Card
+from components.Snackbar import Snackbar
 
 
 class Users(ft.UserControl):
+    card_row: ft.Row | None
+
     def __init__(self, page: ft.Page):
         super().__init__()
         self.page = page
 
     def build(self):
-        return ft.Row([
+        row = ft.Row([
             NavigationRail(self.page, 0),
             ft.VerticalDivider(width=1),
             ft.Container(
@@ -21,37 +25,28 @@ class Users(ft.UserControl):
                         ft.FilledTonalButton(
                             "Agregar", on_click=self.__add_user)
                     ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
-                    ft.Column([
-                        ft.DataTable(
-                            columns=[ft.DataColumn(ft.Text("Nombre")), ft.DataColumn(
-                                ft.Text("Acción"))],
-                            rows=[
-                                ft.DataRow(
-                                    cells=[ft.DataCell(ft.Text("Oscar")), ft.DataCell(
-                                        ft.Row([
-                                            ft.IconButton(icon=ft.icons.EDIT, on_click=lambda e: self.to_edit(
-                                                e, 1), tooltip="Editar"),
-                                            ft.IconButton(icon=ft.icons.DELETE, on_click=lambda e: self.to_edit(
-                                                e, 1), tooltip="Eliminar")
-                                        ])
-                                    )]),
-                                ft.DataRow(
-                                    cells=[ft.DataCell(ft.Text("Carlos")), ft.DataCell(ft.Row([
-                                        ft.IconButton(icon=ft.icons.EDIT, on_click=lambda e: self.to_edit(
-                                            e, 1), tooltip="Editar"),
-                                        ft.IconButton(icon=ft.icons.DELETE, on_click=lambda e: self.to_edit(
-                                            e, 1), tooltip="Eliminar")
-                                    ]))])
-                            ],
-                            width=self.page.window_width - 200,
-                        )
-                    ], scroll=True, expand=True)
-                ], expand=True, spacing=20)
+                    self.create_user_cards()
+                ], expand=True, spacing=20, alignment=ft.MainAxisAlignment.START)
             )
         ], width=self.page.window_width, height=self.page.window_height)
+        return row
 
-    def to_edit(self, e, element_id):
-        print("To edit", element_id)
+    def create_user_cards(self):
+        card_parent = ft.Row(controls=[], wrap=True,
+                             width=self.page.window_width)
+        users = ["Oscar", "Carlos", "William", "Jefferson"]
+
+        def delete(card):
+            card_parent.controls.remove(card)
+            self.update()
+            Snackbar(self.page, "Se ha eliminado al usuario")
+
+        for user in users:
+            card = Card(self.page, user, delete)
+            card_parent.controls.append(card)
+            card.parent = card_parent
+
+        return card_parent
 
     def __add_user(self, e):
         print("Add new user")
