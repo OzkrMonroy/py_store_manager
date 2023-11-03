@@ -3,6 +3,8 @@ from screens.Login import Login
 from screens.Dashboard import Dashboard
 from screens.Users import Users
 from screens.AddUser import AddUser
+from screens.Customers import Customers
+from screens.AddCustomer import AddCustomer
 from controllers.AuthController import AuthController
 from utils.routes import routes
 
@@ -54,6 +56,13 @@ class ScreenManager:
         if self.page.route == routes["new-user"]:
             self.page.views.append(
                 ft.View(routes["new-user"], [AddUser(self.page)]))
+
+        if self.page.route == routes["customers"]:
+            self.page.views.append(
+                ft.View(routes["customers"], [Customers(self.page)]))
+        if self.page.route == routes["new-customer"]:
+            self.page.views.append(
+                ft.View(routes["new-customer"], [AddCustomer(self.page)]))
 
         self.page.update()
 
