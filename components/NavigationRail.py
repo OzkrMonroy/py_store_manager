@@ -1,4 +1,5 @@
 import flet as ft
+from utils.routes import routes
 
 
 class NavigationRail(ft.UserControl):
@@ -55,4 +56,4 @@ class NavigationRail(ft.UserControl):
             print("Selected destination:", f"{self.dict_routes[f'{index}']}")
             self.page.go(f"{self.dict_routes[f'{index}']}")
             return
-        self.page.go("/login")
+        self.page.go(routes["login"])

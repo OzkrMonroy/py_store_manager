@@ -1,6 +1,7 @@
 import flet as ft
 from controllers.UserController import UserController
-from classes.User import NewUser
+from classes.User import User
+from utils.routes import routes
 
 
 class Login(ft.UserControl):
@@ -38,12 +39,12 @@ class Login(ft.UserControl):
         name = self._user_field.value
         password = self._password_field.value
         print(name, password)
-        self.page.go("/dashboard")
+        self.page.go(routes["dashboard"])
 
     def __create_admin_user(self):
         controller = UserController()
         users = controller.get_users()
         if (len(users) == 0):
-            user = NewUser(0, "Administrador",
+            user = User(0, "Administrador",
                            "Admin", "Algoritmos123")
             controller.save(user)

@@ -2,6 +2,8 @@ import flet as ft
 from screens.Login import Login
 from screens.Dashboard import Dashboard
 from screens.Users import Users
+from screens.AddUser import AddUser
+from utils.routes import routes
 
 
 class ScreenManager:
@@ -24,22 +26,26 @@ class ScreenManager:
         page.scroll = ft.ScrollMode.ADAPTIVE
         page.on_route_change = self.__route_change
         page.on_view_pop = self.view_pop
-        page.go("/users")
+        page.go(routes["login"])
 
     def __route_change(self, route):
         self.page.views.clear()
-        if self.page.route == '/login':
+        if self.page.route == routes["login"]:
             self.page.views.append(
                 ft.View(
-                    "/login",
+                    routes["login"],
                     [Login(self.page)]
                 )
             )
-        if self.page.route == "/dashboard":
+        if self.page.route == routes["dashboard"]:
             self.page.views.append(
-                ft.View("/dashboard", [Dashboard(self.page)]))
-        if self.page.route == "/users":
-            self.page.views.append(ft.View("/users", [Users(self.page)]))
+                ft.View(routes["dashboard"], [Dashboard(self.page)]))
+        if self.page.route == routes["users"]:
+            self.page.views.append(
+                ft.View(routes["users"], [Users(self.page)]))
+        if self.page.route == routes["new-user"]:
+            self.page.views.append(
+                ft.View(routes["new-user"], [AddUser(self.page)]))
 
         self.page.update()
 
