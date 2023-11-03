@@ -2,7 +2,7 @@ import flet as ft
 from components.Alert import Alert
 
 
-class Card(ft.UserControl):
+class UserCard(ft.UserControl):
     def __init__(self, page: ft.Page, user, delete_callback):
         super().__init__()
         self.user = user
@@ -15,7 +15,8 @@ class Card(ft.UserControl):
         self.card = ft.Card(width=300, content=ft.Container(
             content=ft.Column(
                 [
-                    ft.Row([ft.Text("Nombre:"), ft.Text(self.user)]),
+                    ft.Row([ft.Text("Nombre:"), ft.Text(self.user.name)]),
+                    ft.Row([ft.Text("Usuario:"), ft.Text(self.user.user_name)]),
                     ft.Row(
                         [ft.TextButton("Editar"), ft.TextButton(
                             "Borrar", on_click=self.show_alert)],
@@ -27,8 +28,12 @@ class Card(ft.UserControl):
         return self.card
 
     def show_alert(self, e):
-        Alert(self.page, "Eliminar usuario",
-              f"¿Desea eliminar a {self.user}?", self.delete_card)
+        if (self.user.id != "0"):
+            Alert(self.page, "Eliminar usuario",
+                  f"¿Desea eliminar a {self.user.name}?", self.delete_card, "")
+        else:
+            Alert(self.page, "Información",
+                  f"No puedes eliminar a {self.user.name}", self.delete_card, "info")
 
     def delete_card(self):
         self.delete_callback(self)

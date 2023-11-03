@@ -2,11 +2,12 @@ import flet as ft
 
 
 class Alert:
-    def __init__(self, page: ft.Page, title, description, ok_callback) -> None:
+    def __init__(self, page: ft.Page, title, description, ok_callback, type) -> None:
         self.title = title
         self.description = description
         self.ok_callback = ok_callback
         self.page = page
+        self.type = type
         self.build()
 
     def build(self):
@@ -16,11 +17,16 @@ class Alert:
             content=ft.Text(self.description),
             actions_alignment=ft.MainAxisAlignment.END)
 
-        dialog.actions = [
-            ft.TextButton("No", on_click=lambda e: self.dismiss_alert(dialog)),
-            ft.TextButton(
-                "Sí", on_click=lambda e: self.on_ok_click(dialog)),
-        ]
+        if (self.type == "info"):
+            dialog.actions = [ft.TextButton(
+                "Aceptar", on_click=lambda e: self.dismiss_alert(dialog))]
+        else:
+            dialog.actions = [
+                ft.TextButton(
+                    "No", on_click=lambda e: self.dismiss_alert(dialog)),
+                ft.TextButton(
+                    "Sí", on_click=lambda e: self.on_ok_click(dialog)),
+            ]
         self.show(dialog)
 
     def show(self, dialog):

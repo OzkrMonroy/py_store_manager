@@ -1,4 +1,6 @@
 import flet as ft
+from controllers.UserController import UserController
+from classes.User import NewUser
 
 
 class Login(ft.UserControl):
@@ -9,6 +11,7 @@ class Login(ft.UserControl):
     def __init__(self, page):
         super().__init__()
         self.page = page
+        self.__create_admin_user()
 
     def build(self):
         return ft.ResponsiveRow([
@@ -36,3 +39,11 @@ class Login(ft.UserControl):
         password = self._password_field.value
         print(name, password)
         self.page.go("/dashboard")
+
+    def __create_admin_user(self):
+        controller = UserController()
+        users = controller.get_users()
+        if (len(users) == 0):
+            user = NewUser(0, "Administrador",
+                           "Admin", "Algoritmos123")
+            controller.save(user)

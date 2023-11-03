@@ -39,9 +39,7 @@ class ScreenManager:
             self.page.views.append(
                 ft.View("/dashboard", [Dashboard(self.page)]))
         if self.page.route == "/users":
-            users_view = Users(self.page)
-            self.page.views.append(ft.View("/users", [users_view]))
-            users_view.update()
+            self.page.views.append(ft.View("/users", [Users(self.page)]))
 
         self.page.update()
 

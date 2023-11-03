@@ -1,11 +1,12 @@
 import flet as ft
+from controllers.UserController import UserController
 from components.NavigationRail import NavigationRail
-from components.Card import Card
+from components.UserCard import UserCard
 from components.Snackbar import Snackbar
 
 
 class Users(ft.UserControl):
-    card_row: ft.Row | None
+    user_controller = UserController()
 
     def __init__(self, page: ft.Page):
         super().__init__()
@@ -34,17 +35,25 @@ class Users(ft.UserControl):
     def create_user_cards(self):
         card_parent = ft.Row(controls=[], wrap=True,
                              width=self.page.window_width)
-        users = ["Oscar", "Carlos", "William", "Jefferson"]
+        users = self.user_controller.get_users()
 
         def delete(card):
             card_parent.controls.remove(card)
             self.update()
-            Snackbar(self.page, "Se ha eliminado al usuario")
+            Snackbar(self.page, "Usuario eliminado")
 
-        for user in users:
-            card = Card(self.page, user, delete)
-            card_parent.controls.append(card)
-            card.parent = card_parent
+        if (len(users) > 0):
+            for user in users:
+                card = UserCard(self.page, user, delete)
+                card_parent.controls.append(card)
+                card.parent = card_parent
+        else:
+            card_parent.controls.append(ft.Column([
+                ft.Container(content=ft.Text(
+                    "No hay usuarios", size=20), margin=30),
+                ft.Image(src="/images/empty.png",
+                             height=300, fit=ft.ImageFit.FILL)
+            ], height=450, width=self.page.window_width, horizontal_alignment=ft.CrossAxisAlignment.CENTER))
 
         return card_parent
 
