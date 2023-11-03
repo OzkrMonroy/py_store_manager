@@ -1,15 +1,18 @@
 import flet as ft
 from components.NavigationRail import NavigationRail
+from controllers.AuthController import AuthController
 
 
 class Dashboard(ft.UserControl):
-    user = 'Oscar'
+    user = AuthController()
 
     def __init__(self, page):
         super().__init__()
         self.page = page
 
     def build(self):
+        user = self.user.get_auth_user()
+        user_name = user.name.split(" ")[0]
         return ft.Row([
             NavigationRail(self.page, None),
             ft.VerticalDivider(width=1),
@@ -18,7 +21,7 @@ class Dashboard(ft.UserControl):
                     ft.Text(""),
                     ft.Row([
                         ft.Column([
-                            ft.Text(f"Bienvenido: {self.user}", font_family="PlaypenSans Black",
+                            ft.Text(f"Bienvenido: {user_name}", font_family="PlaypenSans Black",
                                     text_align=ft.TextAlign.CENTER, style=ft.TextThemeStyle.HEADLINE_LARGE, width=350),
                             ft.Text(
                                 "Selecciona una opción de la barra lateral para comenzar")

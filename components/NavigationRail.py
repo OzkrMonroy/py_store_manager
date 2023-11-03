@@ -1,4 +1,5 @@
 import flet as ft
+from controllers.AuthController import AuthController
 from utils.routes import routes
 
 
@@ -9,6 +10,7 @@ class NavigationRail(ft.UserControl):
         "2": "/products",
         "3": "/cart"
     }
+    auth_controller = AuthController()
 
     def __init__(self, page, selected_index: None | int):
         super().__init__()
@@ -53,7 +55,7 @@ class NavigationRail(ft.UserControl):
 
     def navigate(self, index: int):
         if (index != 4):
-            print("Selected destination:", f"{self.dict_routes[f'{index}']}")
             self.page.go(f"{self.dict_routes[f'{index}']}")
             return
+        self.auth_controller.logout()
         self.page.go(routes["login"])

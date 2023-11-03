@@ -3,10 +3,13 @@ from screens.Login import Login
 from screens.Dashboard import Dashboard
 from screens.Users import Users
 from screens.AddUser import AddUser
+from controllers.AuthController import AuthController
 from utils.routes import routes
 
 
 class ScreenManager:
+    auth_controller = AuthController()
+
     def __init__(self) -> None:
         ft.app(target=self.__render_page, assets_dir="assets")
         self.page
@@ -26,7 +29,12 @@ class ScreenManager:
         page.scroll = ft.ScrollMode.ADAPTIVE
         page.on_route_change = self.__route_change
         page.on_view_pop = self.view_pop
-        page.go(routes["login"])
+
+        user = self.auth_controller.get_auth_user()
+        if (user):
+            page.go(routes["dashboard"])
+        else:
+            page.go(routes["login"])
 
     def __route_change(self, route):
         self.page.views.clear()
