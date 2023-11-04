@@ -95,6 +95,10 @@ class AddUser(ft.UserControl):
         error_message = "Ha ocurrido un error al actualizar el usuario" if self._is_to_update else "Ha ocurrido un error al crear el usuario"
         if (created):
             Snackbar(self.page, success_message)
+            self._name_field.value = ""
+            self._user_name_field.value = ""
+            self._password_field.value = ""
+            self._confirm_password_field.value = ""
             self.page.go(routes["users"])
             return
         Snackbar(self.page, error_message)

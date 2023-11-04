@@ -3,41 +3,39 @@ import flet as ft
 
 class Alert:
     def __init__(self, page: ft.Page, title, description, ok_callback, type) -> None:
-        self.title = title
-        self.description = description
         self.ok_callback = ok_callback
         self.page = page
         self.type = type
+        self.dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text(title),
+            content=ft.Text(description),
+            actions_alignment=ft.MainAxisAlignment.END)
         self.build()
 
     def build(self):
-        dialog = ft.AlertDialog(
-            modal=True,
-            title=ft.Text(self.title),
-            content=ft.Text(self.description),
-            actions_alignment=ft.MainAxisAlignment.END)
 
         if (self.type == "info"):
-            dialog.actions = [ft.TextButton(
-                "Aceptar", on_click=lambda e: self.dismiss_alert(dialog))]
+            self.dialog.actions = [ft.TextButton(
+                "Aceptar", on_click=self.dismiss_alert)]
         else:
-            dialog.actions = [
+            self.dialog.actions = [
                 ft.TextButton(
-                    "No", on_click=lambda e: self.dismiss_alert(dialog)),
+                    "No", on_click=self.dismiss_alert),
                 ft.TextButton(
-                    "Sí", on_click=lambda e: self.on_ok_click(dialog)),
+                    "Sí", on_click=self.on_ok_click),
             ]
-        self.show(dialog)
+        self.show()
 
-    def show(self, dialog):
-        self.page.dialog = dialog
-        dialog.open = True
+    def show(self):
+        self.page.dialog = self.dialog
+        self.dialog.open = True
         self.page.update()
 
-    def dismiss_alert(self, dialog):
-        dialog.open = False
+    def dismiss_alert(self, e):
+        self.dialog.open = False
         self.page.update()
 
-    def on_ok_click(self, dialog):
+    def on_ok_click(self, e):
         self.ok_callback()
-        self.dismiss_alert(dialog)
+        self.dismiss_alert(self.dialog)

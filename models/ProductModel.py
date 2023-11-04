@@ -1,4 +1,5 @@
 import os
+import uuid
 from classes.Product import Product
 from classes.ParentModel import ParentModel
 from utils.consts import ROOT_PATH, PRODUCTS_FILE
@@ -23,7 +24,7 @@ class ProductModel(ParentModel):
 
     def save(self, product: Product) -> bool:
         file = self.__open_file("a")
-        product.id = len(self.products)
+        product.id = uuid.uuid4()
         if (file):
             file.write(
                 f"{product.id},{product.name},{product.description},{product.price},{product.quantity}\n")
@@ -45,6 +46,7 @@ class ProductModel(ParentModel):
         return is_updated
 
     def delete(self, product: Product):
+        print("id", product.id)
         is_deleted = self.__delete_in_file(product)
         if (is_deleted):
             self.products.remove(product)
@@ -69,7 +71,7 @@ class ProductModel(ParentModel):
             lines = read_file.readlines()
             read_file.close()
             updated_lines = [
-                line for line in lines if not line.startswith(product.id)]
+                line for line in lines if not line.startswith(str(product.id))]
             write_file = self.__open_file("w")
             write_file.writelines(updated_lines)
             write_file.close()

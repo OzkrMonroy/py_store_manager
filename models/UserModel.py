@@ -1,4 +1,5 @@
 import os
+import uuid
 from classes.User import User
 from classes.ParentModel import ParentModel
 from utils.consts import ROOT_PATH, USERS_FILE
@@ -22,7 +23,7 @@ class UserModel(ParentModel):
 
     def save(self, user: User) -> bool:
         file = self.__open_file("a")
-        user.id = len(self.users)
+        user.id = uuid.uuid4()
         if (file):
             file.write(
                 f"{user.id},{user.name},{user.user_name},{user.password}\n")
@@ -43,6 +44,7 @@ class UserModel(ParentModel):
         return is_updated
 
     def delete(self, user: User):
+        print("id", user.id)
         is_deleted = self.__delete_in_file(user)
         if (is_deleted):
             self.users.remove(user)
@@ -67,7 +69,7 @@ class UserModel(ParentModel):
             lines = read_file.readlines()
             read_file.close()
             updated_lines = [
-                line for line in lines if not line.startswith(user.id)]
+                line for line in lines if not line.startswith(str(user.id))]
             write_file = self.__open_file("w")
             write_file.writelines(updated_lines)
             write_file.close()

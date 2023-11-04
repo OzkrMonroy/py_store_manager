@@ -89,6 +89,10 @@ class AddCustomer(ft.UserControl):
         error_message = "Ha ocurrido un error al actualizar el cliente" if self._is_to_update else "Ha ocurrido un error al crear el cliente"
         if (created):
             Snackbar(self.page, success_message)
+            self._name_field.value = ""
+            self._address_field.value = ""
+            self._phone_field.value = ""
+            self._nit_field.value = ""
             self.page.go(routes["customers"])
             return
         Snackbar(self.page, error_message)

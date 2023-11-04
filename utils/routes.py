@@ -5,4 +5,6 @@ routes = {
     "new-user": "/new-user",
     "customers": "/customers",
     "new-customer": "/new-customer",
+    "products": "/products",
+    "new-product": "/new-product",
 }

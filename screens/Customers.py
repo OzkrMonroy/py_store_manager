@@ -1,5 +1,6 @@
 import flet as ft
 from controllers.CustomerController import CustomerController
+from classes.Customer import Customer
 from components.NavigationRail import NavigationRail
 from components.CustomerCard import CustomerCard
 from components.Snackbar import Snackbar
@@ -38,15 +39,14 @@ class Customers(ft.UserControl):
                              width=self.page.window_width)
         customers = self.user_controller.get_customers()
 
-        def delete(card):
-            deleted = self.user_controller.delete(card.customer)
+        def delete(card, customer: Customer):
+            deleted = self.user_controller.delete(customer)
             if (deleted):
                 card_parent.controls.remove(card)
                 self.update()
                 Snackbar(self.page, "Cliente eliminado")
 
         if (len(customers) > 0):
-            print("Adding users")
             for customer in customers:
                 card = CustomerCard(self.page, customer, delete)
                 card_parent.controls.append(card)

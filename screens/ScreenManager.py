@@ -5,6 +5,8 @@ from screens.Users import Users
 from screens.AddUser import AddUser
 from screens.Customers import Customers
 from screens.AddCustomer import AddCustomer
+from screens.Products import Products
+from screens.AddProduct import AddProduct
 from controllers.AuthController import AuthController
 from utils.routes import routes
 
@@ -30,7 +32,6 @@ class ScreenManager:
         page.auto_scroll = True
         page.scroll = ft.ScrollMode.ADAPTIVE
         page.on_route_change = self.__route_change
-        page.on_view_pop = self.view_pop
 
         user = self.auth_controller.get_auth_user()
         if (user):
@@ -38,7 +39,7 @@ class ScreenManager:
         else:
             page.go(routes["login"])
 
-    def __route_change(self, route):
+    def __route_change(self, _):
         self.page.views.clear()
         if self.page.route == routes["login"]:
             self.page.views.append(
@@ -50,6 +51,7 @@ class ScreenManager:
         if self.page.route == routes["dashboard"]:
             self.page.views.append(
                 ft.View(routes["dashboard"], [Dashboard(self.page)]))
+
         if self.page.route == routes["users"]:
             self.page.views.append(
                 ft.View(routes["users"], [Users(self.page)]))
@@ -64,9 +66,11 @@ class ScreenManager:
             self.page.views.append(
                 ft.View(routes["new-customer"], [AddCustomer(self.page)]))
 
-        self.page.update()
+        if self.page.route == routes["products"]:
+            self.page.views.append(
+                ft.View(routes["products"], [Products(self.page)]))
+        if self.page.route == routes["new-product"]:
+            self.page.views.append(
+                ft.View(routes["new-product"], [AddProduct(self.page)]))
 
-    def view_pop(self, view):
-        self.page.views.pop()
-        top_view = self.page.views[-1]
-        self.page.go(top_view.route)
+        self.page.update()

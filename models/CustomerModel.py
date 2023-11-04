@@ -1,4 +1,5 @@
 import os
+import uuid
 from classes.Customer import Customer
 from classes.ParentModel import ParentModel
 from utils.consts import ROOT_PATH, CUSTOMERS_FILE
@@ -23,7 +24,7 @@ class CustomerModel(ParentModel):
 
     def save(self, customer: Customer) -> bool:
         file = self.__open_file("a")
-        customer.id = len(self.customers)
+        customer.id = uuid.uuid4()
         if (file):
             file.write(
                 f"{customer.id},{customer.name},{customer.address},{customer.phone},{customer.nit}\n")
@@ -45,6 +46,7 @@ class CustomerModel(ParentModel):
         return is_updated
 
     def delete(self, customer: Customer):
+        print("id", customer.id)
         is_deleted = self.__delete_in_file(customer)
         if (is_deleted):
             self.customers.remove(customer)
@@ -69,7 +71,7 @@ class CustomerModel(ParentModel):
             lines = read_file.readlines()
             read_file.close()
             updated_lines = [
-                line for line in lines if not line.startswith(customer.id)]
+                line for line in lines if not line.startswith(str(customer.id))]
             write_file = self.__open_file("w")
             write_file.writelines(updated_lines)
             write_file.close()

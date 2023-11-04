@@ -6,6 +6,7 @@ from utils.routes import routes
 
 class CustomerCard(ft.UserControl):
     controller = CustomerController()
+    customer = None
 
     def __init__(self, page: ft.Page, customer, delete_callback):
         super().__init__()
@@ -43,7 +44,7 @@ class CustomerCard(ft.UserControl):
               f"¿Desea eliminar a {self.customer.name}?", self.delete_card, "")
 
     def delete_card(self):
-        self.delete_callback(self)
+        self.delete_callback(self, self.customer)
 
     def init_edit(self, e):
         self.controller.set_element_to_update(self.customer)
