@@ -13,9 +13,9 @@ class CustomerModel(ParentModel):
         if (file):
             for customer in file:
                 customer = customer.rstrip("\n").split(",")
-                user_to_save = Customer(
+                customer_to_save = Customer(
                     customer[0], customer[1], customer[2], customer[3], customer[4])
-                self.__save_customer_to_list(user_to_save)
+                self.__save_customer_to_list(customer_to_save)
             file.close()
 
     def get_customers(self):

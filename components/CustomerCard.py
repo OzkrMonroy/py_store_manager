@@ -16,16 +16,17 @@ class CustomerCard(ft.UserControl):
         self.page = page
 
     def build(self):
+        font_family = "Roboto Bold"
         self.card = ft.Card(width=300, content=ft.Container(
             content=ft.Column(
                 [
-                    ft.Row([ft.Text("Nombre:", font_family="Roboto Bold"),
+                    ft.Row([ft.Text("Nombre:", font_family=font_family),
                            ft.Text(self.customer.name)]),
-                    ft.Row([ft.Text("Dirección:", font_family="Roboto Bold"), ft.Text(
+                    ft.Row([ft.Text("Dirección:", font_family=font_family), ft.Text(
                         self.customer.address)]),
-                    ft.Row([ft.Text("Teléfono:", font_family="Roboto Bold"), ft.Text(
+                    ft.Row([ft.Text("Teléfono:", font_family=font_family), ft.Text(
                         self.customer.phone)]),
-                    ft.Row([ft.Text("Nit:", font_family="Roboto Bold"), ft.Text(
+                    ft.Row([ft.Text("Nit:", font_family=font_family), ft.Text(
                         self.customer.nit)]),
                     ft.Row(
                         [ft.TextButton("Editar", on_click=self.init_edit), ft.TextButton(
