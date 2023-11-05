@@ -8,7 +8,7 @@ class NavigationRail(ft.UserControl):
         "0": "/users",
         "1": "/customers",
         "2": "/products",
-        "3": "/cart"
+        "3": "/categories"
     }
     auth_controller = AuthController()
 
@@ -40,10 +40,10 @@ class NavigationRail(ft.UserControl):
                     label_content=ft.Text("Productos"),
                 ),
                 ft.NavigationRailDestination(
-                    icon=ft.icons.PRICE_CHECK_OUTLINED,
+                    icon=ft.icons.CATEGORY_OUTLINED,
                     selected_icon_content=ft.Icon(
-                        ft.icons.PRICE_CHECK),
-                    label_content=ft.Text("Facturación"),
+                        ft.icons.CATEGORY),
+                    label_content=ft.Text("Categoría de Productos"),
                 ),
                 ft.NavigationRailDestination(
                     icon=ft.icons.LOGOUT,

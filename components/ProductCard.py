@@ -1,5 +1,4 @@
 import flet as ft
-from components.Alert import Alert
 from controllers.ProductController import ProductController
 from classes.Product import Product
 from utils.routes import routes

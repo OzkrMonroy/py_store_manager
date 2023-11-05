@@ -7,6 +7,8 @@ from screens.Customers import Customers
 from screens.AddCustomer import AddCustomer
 from screens.Products import Products
 from screens.AddProduct import AddProduct
+from screens.ProductsCategory import ProductsCategory
+from screens.AddProductCategory import AddProductCategory
 from controllers.AuthController import AuthController
 from utils.routes import routes
 
@@ -39,7 +41,7 @@ class ScreenManager:
         else:
             page.go(routes["login"])
 
-    def __route_change(self, _):
+    def __route_change(self, route):
         self.page.views.clear()
         if self.page.route == routes["login"]:
             self.page.views.append(
@@ -72,5 +74,12 @@ class ScreenManager:
         if self.page.route == routes["new-product"]:
             self.page.views.append(
                 ft.View(routes["new-product"], [AddProduct(self.page)]))
+
+        if self.page.route == routes["products-category"]:
+            self.page.views.append(
+                ft.View(routes["products-category"], [ProductsCategory(self.page)]))
+        if self.page.route == routes["new-product-category"]:
+            self.page.views.append(
+                ft.View(routes["new-product-category"], [AddProductCategory(self.page)]))
 
         self.page.update()

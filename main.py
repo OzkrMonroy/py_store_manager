@@ -1,6 +1,6 @@
 import os
 from screens.ScreenManager import ScreenManager
-from utils.consts import ROOT_PATH, CUSTOMERS_FILE, PRODUCTS_FILE, USERS_FILE
+from utils.consts import ROOT_PATH, CUSTOMERS_FILE, PRODUCTS_FILE, USERS_FILE, PRODUCTS_CATEGORY_FILE
 
 
 def main():
@@ -16,7 +16,7 @@ def create_dirs():
 
 
 def create_files():
-    files = [CUSTOMERS_FILE, PRODUCTS_FILE, USERS_FILE]
+    files = [CUSTOMERS_FILE, PRODUCTS_FILE, USERS_FILE, PRODUCTS_CATEGORY_FILE]
 
     for file in files:
         path = f"{ROOT_PATH}\{file}"

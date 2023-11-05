@@ -7,4 +7,6 @@ routes = {
     "new-customer": "/new-customer",
     "products": "/products",
     "new-product": "/new-product",
+    "products-category": "/categories",
+    "new-product-category": "/new-category",
 }
