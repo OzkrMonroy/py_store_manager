@@ -46,7 +46,6 @@ class ProductModel(ParentModel):
         return is_updated
 
     def delete(self, product: Product):
-        print("id", product.id)
         is_deleted = self.__delete_in_file(product)
         if (is_deleted):
             self.products.remove(product)

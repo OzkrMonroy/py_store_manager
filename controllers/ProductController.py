@@ -1,5 +1,5 @@
 from models.ProductModel import ProductModel
-from classes.Customer import Customer
+from classes.Product import Product
 
 
 class ProductController:
@@ -16,17 +16,17 @@ class ProductController:
     def get_products(self):
         return self.product.get_products()
 
-    def save(self, product: Customer) -> bool:
+    def save(self, product: Product) -> bool:
         return self.product.save(product)
 
-    def update(self, product: Customer) -> bool:
+    def update(self, product: Product) -> bool:
         return self.product.update(product)
 
-    def delete(self, product: Customer) -> bool:
+    def delete(self, product: Product) -> bool:
         return self.product.delete(product)
 
     @classmethod
-    def set_element_to_update(cls, product: Customer):
+    def set_element_to_update(cls, product: Product):
         cls.element_to_update = product
         cls.is_to_update = True
 
